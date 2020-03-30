@@ -17,6 +17,7 @@ class MyScaffold extends StatelessWidget {
             title: Text(
               "Example Text",
               style: Theme.of(context).primaryTextTheme.title,
+              textAlign: TextAlign.center,
             ),
           ),
           Expanded(
