@@ -3,66 +3,57 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(MaterialApp(
     title: "My Flutter App",
-    home: TutorialHome(),
+    home: MyHome(),
   ));
 }
 
-class TutorialHome extends StatelessWidget {
+class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
-          tooltip: 'nav menu',
+          icon: Icon(Icons.menu),
+          tooltip: 'Navigation menu',
           onPressed: null,
         ),
-        title: Text("Example App"),
+        title: Text('Example title'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            tooltip: 'Search button',
+            icon: Icon(Icons.search),
+            tooltip: 'Search',
             onPressed: null,
-          )
+          ),
         ],
       ),
-      body: Center(
-        child: MyButton(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Add',
-        child: Icon(Icons.add),
-      ),
+      body: Counter(),
     );
   }
 }
 
-class MyButton extends StatelessWidget {
+class Counter extends StatefulWidget {
   @override
+  _CounterState createState() => _CounterState();
+}
+
+class _CounterState extends State<Counter> {
+  @override
+  int _counter = 0;
+  void _increamenter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        print('MyButton was tapped!');
-      },
-      child: Container(
-        height: 36.0,
-        padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          color: Colors.lightGreen[500],
+    return Row(
+      children: <Widget>[
+        RaisedButton(
+          onPressed: _increamenter,
+          child: Text('Increment'),
         ),
-        child: Center(
-          child: Text('Engage'),
-        ),
-      ),
+        Text('Count: $_counter'),
+      ],
     );
   }
 }
