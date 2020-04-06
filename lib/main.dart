@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(MaterialApp(
@@ -10,50 +11,62 @@ void main() {
 class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          tooltip: 'Navigation menu',
-          onPressed: null,
-        ),
-        title: Text('Example title'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            tooltip: 'Search',
-            onPressed: null,
-          ),
-        ],
+    return MaterialApp(
+      title: "BG Changer",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-      body: Counter(),
+      home: MyHomePage(),
     );
   }
 }
 
-class Counter extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _CounterState createState() => _CounterState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _CounterState extends State<Counter> {
-  @override
-  int _counter = 0;
-  void _increamenter() {
+class _MyHomePageState extends State<MyHomePage> {
+  List<Color> randColor = [
+    Colors.red,
+    Colors.amber,
+    Colors.orange,
+    Colors.green,
+    Colors.pink,
+    Colors.blue,
+    Colors.lightGreen,
+    Colors.teal,
+  ];
+
+  int index;
+  Color currentColor = Colors.white;
+  void changeColor() {
     setState(() {
-      _counter++;
+      index = Random().nextInt(randColor.length);
+      currentColor = randColor[index];
     });
   }
 
+  @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        RaisedButton(
-          onPressed: _increamenter,
-          child: Text('Increment'),
+    return Container(
+      decoration: BoxDecoration(
+        color: currentColor,
+      ),
+      child: FlatButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onPressed: changeColor,
+        child: Text(
+          "Change!",
+          style: TextStyle(
+            fontSize: 24.0,
+            color: Colors.white,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        Text('Count: $_counter'),
-      ],
+      ),
     );
   }
 }
