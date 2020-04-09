@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:fluttertut/thirdscreen.dart';
+import 'package:fluttertut/secondscreen.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -12,7 +15,12 @@ class MyHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "BG Changer",
+      // for multiple routs
+      routes: {
+        '/second': (context) => secondscreen(),
+        '/third': (context) => thirdscreen(),
+      },
+      title: "MutlipleScreen",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -27,45 +35,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Color> randColor = [
-    Colors.red,
-    Colors.amber,
-    Colors.orange,
-    Colors.green,
-    Colors.pink,
-    Colors.blue,
-    Colors.lightGreen,
-    Colors.teal,
-  ];
-
-  int index;
-  Color currentColor = Colors.white;
-  void changeColor() {
-    setState(() {
-      index = Random().nextInt(randColor.length);
-      currentColor = randColor[index];
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: currentColor,
-      ),
-      child: FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: changeColor,
-        child: Text(
-          "Change!",
-          style: TextStyle(
-            fontSize: 24.0,
-            color: Colors.white,
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+    return Scaffold(
+      body: FutureBuilder(
+        future: DefaultAssetBundle.of(context).loadString("assets/data.json"),
+        builder: (context, snapshot) {
+          var mydata = json.decode(snapshot.data.toString());
+          if (mydata == null) {
+            return Center(
+              child: Text(
+                "Loading",
+              ),
+            );
+          } else {
+            return Center(
+              child: Text(
+                mydata["name"],
+              ),
+            );
+          }
+        },
       ),
     );
   }
