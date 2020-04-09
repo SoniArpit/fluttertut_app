@@ -35,27 +35,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<String> names = ["Arpit", "Harry"];
+  String value;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: DefaultAssetBundle.of(context).loadString("assets/data.json"),
-        builder: (context, snapshot) {
-          var mydata = json.decode(snapshot.data.toString());
-          if (mydata == null) {
-            return Center(
-              child: Text(
-                "Loading",
-              ),
-            );
-          } else {
-            return Center(
-              child: Text(
-                mydata["name"],
-              ),
-            );
-          }
-        },
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          TextField(
+            autofocus: false,
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (text) {
+              value = text;
+            },
+          ),
+          RaisedButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => secondscreen(value: names),
+              ));
+            },
+            child: Text("Submit"),
+          )
+        ],
       ),
     );
   }

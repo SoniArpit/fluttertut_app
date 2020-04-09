@@ -1,37 +1,32 @@
 // you can also code secondscreen in main file (in one file means)
 import 'package:flutter/material.dart';
 
+// class secondscreen extends StatelessWidget {
+//   String value;
+//   secondscreen({this.value});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Text(value),
+//     );
+//   }
+// }
+
 class secondscreen extends StatefulWidget {
+  List value;
+  secondscreen({Key key, this.value}) : super(key: key);
   @override
-  _secondscreenState createState() => _secondscreenState();
+  _secondscreenState createState() => _secondscreenState(value);
 }
 
 class _secondscreenState extends State<secondscreen> {
+  List value;
+  _secondscreenState(this.value);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("MultipleScreen"),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Second Page",
-            ),
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                "GoTo First",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: Colors.blue,
-            )
-          ],
-        ),
+        child: Text(value[1]),
       ),
     );
   }
